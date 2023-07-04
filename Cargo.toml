@@ -1,0 +1,19 @@
+[package]
+name = "proc-cpuinfo"
+authors = ["Richard Neumann <mail@richard-neumann.de>"]
+description = "Read /proc/cpuinfo on linux systems"
+license = "MIT"
+homepage = "https://github.com/conqp/proc-cpuinfo/"
+repository = "https://github.com/conqp/proc_cpuinfo/"
+readme = "README.md"
+documentation = "https://docs.rs/proc-cpuinfo"
+keywords = [ "proc", "cpuinfo"]
+version = "0.1.0"
+edition = "2021"
+exclude = [
+    ".gitignore",
+]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
