@@ -4,9 +4,6 @@ use std::fs::read_to_string;
 use std::str::FromStr;
 
 const DEFAULT_FILE: &str = "/proc/cpuinfo";
-const KB: usize = 1000;
-const MB: usize = 1000 * KB;
-const GB: usize = 1000 * MB;
 const KIB: usize = 1024;
 const MIB: usize = 1024 * KIB;
 const GIB: usize = 1024 * MIB;
@@ -128,12 +125,9 @@ impl<'cpu_info> Cpu<'cpu_info> {
                     let value: usize = value.parse().ok()?;
                     match unit {
                         "B" => Some(value),
-                        "KB" => Some(value * KB),
-                        "MB" => Some(value * MB),
-                        "GB" => Some(value * GB),
-                        "KiB" => Some(value * KIB),
-                        "MiB" => Some(value * MIB),
-                        "GiB" => Some(value * GIB),
+                        "KB" => Some(value * KIB),
+                        "MB" => Some(value * MIB),
+                        "GB" => Some(value * GIB),
                         _ => None,
                     }
                 }
