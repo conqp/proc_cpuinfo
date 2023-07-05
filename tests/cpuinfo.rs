@@ -370,7 +370,7 @@ fn test_cpu_properties() {
         assert_eq!(cpu.stepping(), Some(5));
         assert_eq!(cpu.microcode(), Some(0x2c));
         assert_eq!(cpu.cpu_mhz(), Some(freq));
-        assert_eq!(cpu.cache_size(), Some(18_432_000));
+        assert_eq!(cpu.cache_size(), Some(18432 * 1024));
         assert_eq!(cpu.physical_id(), Some(0));
         assert_eq!(cpu.siblings(), Some(12));
         assert_eq!(cpu.core_id(), Some(core_id));
