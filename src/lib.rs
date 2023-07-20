@@ -48,13 +48,23 @@ impl CpuInfo {
     }
 }
 
+impl From<&str> for CpuInfo {
+    fn from(s: &str) -> Self {
+        Self::from(s.to_string())
+    }
+}
+
+impl From<String> for CpuInfo {
+    fn from(text: String) -> Self {
+        Self { text }
+    }
+}
+
 impl FromStr for CpuInfo {
     type Err = Infallible;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(Self {
-            text: s.to_string(),
-        })
+        Ok(Self::from(s))
     }
 }
 
