@@ -1,6 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use std::convert::Infallible;
 use std::fs::read_to_string;
+use std::path::Path;
 use std::str::FromStr;
 
 const DEFAULT_FILE: &str = "/proc/cpuinfo";
@@ -24,7 +25,7 @@ impl CpuInfo {
     /// Reads CPU information from the given file.
     /// # Errors
     /// Returns an [`std::io::Error`] if the file could not be read
-    pub fn read_from(filename: &str) -> Result<Self, std::io::Error> {
+    pub fn read_from(filename: impl AsRef<Path>) -> Result<Self, std::io::Error> {
         read_to_string(filename).map(|text| Self { text })
     }
 
