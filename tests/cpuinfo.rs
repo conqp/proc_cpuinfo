@@ -347,8 +347,7 @@ const CORE_IDS: [usize; 12] = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5];
 #[allow(clippy::unwrap_used)]
 #[test]
 fn test_cpu_count() {
-    let cpu_info = CpuInfo::from_str(CPU_INFO).unwrap();
-    assert_eq!(cpu_info.iter().count(), 12);
+    assert_eq!(CpuInfo::from_str(CPU_INFO).unwrap().iter().count(), 12);
 }
 
 #[allow(clippy::unwrap_used)]
