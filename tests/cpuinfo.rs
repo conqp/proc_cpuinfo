@@ -353,41 +353,219 @@ fn test_cpu_count() {
 
 #[allow(clippy::unwrap_used)]
 #[test]
-fn test_cpu_properties() {
-    let cpu_info = CpuInfo::from_str(CPU_INFO).unwrap();
-
-    for (index, ((cpu, freq), core_id)) in
-        cpu_info.iter().zip(FREQUENCIES).zip(CORE_IDS).enumerate()
-    {
+fn test_processor() {
+    for (index, cpu) in CpuInfo::from_str(CPU_INFO).unwrap().iter().enumerate() {
         assert_eq!(cpu.processor(), Some(index));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_vendor_id() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.vendor_id(), Some("GenuineIntel"));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_cpu_family() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.cpu_family(), Some(6));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_model() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.model(), Some(151));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_model_name() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(
             cpu.model_name(),
             Some("12th Gen Intel(R) Core(TM) i5-12400")
         );
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_stepping() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.stepping(), Some(5));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_microcode() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.microcode(), Some(0x2c));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_cpu_mhz() {
+    for (cpu, freq) in CpuInfo::from_str(CPU_INFO).unwrap().iter().zip(FREQUENCIES) {
         assert_eq!(cpu.cpu_mhz(), Some(freq));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_cache_size() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.cache_size(), Some(18432 * 1024));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_physical_id() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.physical_id(), Some(0));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_siblings() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.siblings(), Some(12));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_core_id() {
+    for (cpu, core_id) in CpuInfo::from_str(CPU_INFO).unwrap().iter().zip(CORE_IDS) {
         assert_eq!(cpu.core_id(), Some(core_id));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_cpu_cores() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.cpu_cores(), Some(6));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_apicid() {
+    for (index, cpu) in CpuInfo::from_str(CPU_INFO).unwrap().iter().enumerate() {
         assert_eq!(cpu.apicid(), Some(index));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_initial_apicid() {
+    for (index, cpu) in CpuInfo::from_str(CPU_INFO).unwrap().iter().enumerate() {
         assert_eq!(cpu.initial_apicid(), Some(index));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_fpu() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.fpu(), Some(true));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_fpu_exception() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.fpu_exception(), Some(true));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_cpuid_level() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.cpuid_level(), Some(32));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_wp() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.wp(), Some(true));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_flags() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert!(cpu.flags().contains("mmx"));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_vmx_flags() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert!(cpu.vmx_flags().contains("flexpriority"));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_bugs() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert!(cpu.bugs().contains("spectre_v2"));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_bogomips() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.bogomips(), Some(4993.00));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_clflush_size() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.clflush_size(), Some(64));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_cache_alignment() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.cache_alignment(), Some(64));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_address_sizes() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.address_sizes(), Some((39, 48)));
+    }
+}
+
+#[allow(clippy::unwrap_used)]
+#[test]
+fn test_power_management() {
+    for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
         assert_eq!(cpu.power_management(), Some(""));
     }
 }
