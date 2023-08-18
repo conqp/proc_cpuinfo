@@ -10,9 +10,7 @@ const MIB: usize = 1024 * KIB;
 const GIB: usize = 1024 * MIB;
 
 #[derive(Debug, Eq, PartialEq)]
-pub struct CpuInfo {
-    text: String,
-}
+pub struct CpuInfo(String);
 
 impl CpuInfo {
     /// Reads CPU information from `/proc/cpuinfo`.
@@ -26,7 +24,7 @@ impl CpuInfo {
     /// # Errors
     /// Returns an [`std::io::Error`] if the file could not be read
     pub fn read_from(filename: impl AsRef<Path>) -> Result<Self, std::io::Error> {
-        read_to_string(filename).map(|text| Self { text })
+        read_to_string(filename).map(Self)
     }
 
     #[must_use]
@@ -37,7 +35,7 @@ impl CpuInfo {
     }
 
     pub fn cpus(&self) -> impl Iterator<Item = Cpu> {
-        self.text
+        self.0
             .split("\n\n")
             .filter(|text| !text.is_empty())
             .map(Cpu::from_str)
@@ -56,7 +54,7 @@ impl From<&str> for CpuInfo {
 
 impl From<String> for CpuInfo {
     fn from(text: String) -> Self {
-        Self { text }
+        Self(text)
     }
 }
 
