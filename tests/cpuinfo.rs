@@ -338,11 +338,184 @@ address sizes	: 39 bits physical, 48 bits virtual
 power management:
 
 ";
+const BUGS: [&str; 5] = [
+    "spectre_v1",
+    "spectre_v2",
+    "spec_store_bypass",
+    "swapgs",
+    "eibrs_pbrsb",
+];
 const FREQUENCIES: [f32; 12] = [
     2500.0, 2500.0, 2500.0, 2500.0, 800.116, 2500.0, 800.022, 2500.0, 2500.0, 2500.0, 2500.0,
     800.054,
 ];
 const CORE_IDS: [usize; 12] = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5];
+const FLAGS: [&str; 138] = [
+    "fpu",
+    "vme",
+    "de",
+    "pse",
+    "tsc",
+    "msr",
+    "pae",
+    "mce",
+    "cx8",
+    "apic",
+    "sep",
+    "mtrr",
+    "pge",
+    "mca",
+    "cmov",
+    "pat",
+    "pse36",
+    "clflush",
+    "dts",
+    "acpi",
+    "mmx",
+    "fxsr",
+    "sse",
+    "sse2",
+    "ss",
+    "ht",
+    "tm",
+    "pbe",
+    "syscall",
+    "nx",
+    "pdpe1gb",
+    "rdtscp",
+    "lm",
+    "constant_tsc",
+    "art",
+    "arch_perfmon",
+    "pebs",
+    "bts",
+    "rep_good",
+    "nopl",
+    "xtopology",
+    "nonstop_tsc",
+    "cpuid",
+    "aperfmperf",
+    "tsc_known_freq",
+    "pni",
+    "pclmulqdq",
+    "dtes64",
+    "monitor",
+    "ds_cpl",
+    "vmx",
+    "est",
+    "tm2",
+    "ssse3",
+    "sdbg",
+    "fma",
+    "cx16",
+    "xtpr",
+    "pdcm",
+    "sse4_1",
+    "sse4_2",
+    "x2apic",
+    "movbe",
+    "popcnt",
+    "tsc_deadline_timer",
+    "aes",
+    "xsave",
+    "avx",
+    "f16c",
+    "rdrand",
+    "lahf_lm",
+    "abm",
+    "3dnowprefetch",
+    "cpuid_fault",
+    "epb",
+    "cat_l2",
+    "cdp_l2",
+    "ssbd",
+    "ibrs",
+    "ibpb",
+    "stibp",
+    "ibrs_enhanced",
+    "tpr_shadow",
+    "flexpriority",
+    "ept",
+    "vpid",
+    "ept_ad",
+    "fsgsbase",
+    "tsc_adjust",
+    "bmi1",
+    "avx2",
+    "smep",
+    "bmi2",
+    "erms",
+    "invpcid",
+    "rdt_a",
+    "rdseed",
+    "adx",
+    "smap",
+    "clflushopt",
+    "clwb",
+    "intel_pt",
+    "sha_ni",
+    "xsaveopt",
+    "xsavec",
+    "xgetbv1",
+    "xsaves",
+    "split_lock_detect",
+    "avx_vnni",
+    "dtherm",
+    "ida",
+    "arat",
+    "pln",
+    "pts",
+    "hwp",
+    "hwp_notify",
+    "hwp_act_window",
+    "hwp_epp",
+    "hwp_pkg_req",
+    "hfi",
+    "vnmi",
+    "umip",
+    "pku",
+    "ospke",
+    "waitpkg",
+    "gfni",
+    "vaes",
+    "vpclmulqdq",
+    "rdpid",
+    "movdiri",
+    "movdir64b",
+    "fsrm",
+    "md_clear",
+    "serialize",
+    "arch_lbr",
+    "ibt",
+    "flush_l1d",
+    "arch_capabilities",
+];
+const VMX_FLAGS: [&str; 24] = [
+    "vnmi",
+    "preemption_timer",
+    "posted_intr",
+    "invvpid",
+    "ept_x_only",
+    "ept_ad",
+    "ept_1gb",
+    "flexpriority",
+    "apicv",
+    "tsc_offset",
+    "vtpr",
+    "mtf",
+    "vapic",
+    "ept",
+    "vpid",
+    "unrestricted_guest",
+    "vapic_reg",
+    "vid",
+    "ple",
+    "shadow_vmcs",
+    "pml",
+    "ept_mode_based_exec",
+    "tsc_scaling",
+    "usr_wait_pause",
+];
 
 #[allow(clippy::unwrap_used)]
 #[test]
@@ -509,7 +682,7 @@ fn test_wp() {
 #[test]
 fn test_flags() {
     for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
-        assert!(cpu.flags().contains("mmx"));
+        assert_eq!(cpu.flags(), FLAGS.into_iter().collect());
     }
 }
 
@@ -517,7 +690,7 @@ fn test_flags() {
 #[test]
 fn test_vmx_flags() {
     for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
-        assert!(cpu.vmx_flags().contains("flexpriority"));
+        assert_eq!(cpu.vmx_flags(), VMX_FLAGS.into_iter().collect());
     }
 }
 
@@ -525,7 +698,7 @@ fn test_vmx_flags() {
 #[test]
 fn test_bugs() {
     for cpu in CpuInfo::from_str(CPU_INFO).unwrap().iter() {
-        assert!(cpu.bugs().contains("spectre_v2"));
+        assert_eq!(cpu.bugs(), BUGS.into_iter().collect());
     }
 }
 
