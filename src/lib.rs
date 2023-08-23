@@ -46,6 +46,12 @@ impl CpuInfo {
     }
 }
 
+impl Default for CpuInfo {
+    fn default() -> Self {
+        Self::read().unwrap_or_else(|_| panic!("Could not read from {DEFAULT_FILE}"))
+    }
+}
+
 impl From<&str> for CpuInfo {
     fn from(s: &str) -> Self {
         Self::from(s.to_string())
