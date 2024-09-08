@@ -28,18 +28,18 @@ impl CpuInfo {
     }
 
     #[must_use]
-    pub fn cpu(&self, index: usize) -> Option<Cpu> {
+    pub fn cpu(&self, index: usize) -> Option<Cpu<'_>> {
         self.cpus().find(|cpu| cpu.processor() == Some(index))
     }
 
-    pub fn cpus(&self) -> impl Iterator<Item = Cpu> {
+    pub fn cpus(&self) -> impl Iterator<Item = Cpu<'_>> {
         self.0
             .split("\n\n")
             .filter(|text| !text.is_empty())
             .map(Cpu::from_str)
     }
 
-    pub fn iter(&self) -> impl Iterator<Item = Cpu> {
+    pub fn iter(&self) -> impl Iterator<Item = Cpu<'_>> {
         self.cpus()
     }
 }
