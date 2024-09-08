@@ -29,9 +29,7 @@ impl CpuInfo {
 
     #[must_use]
     pub fn cpu(&self, index: usize) -> Option<Cpu> {
-        self.cpus()
-            .filter_map(|cpu| cpu.processor().map(|processor| (processor, cpu)))
-            .find_map(|(processor, cpu)| if processor == index { Some(cpu) } else { None })
+        self.cpus().find(|cpu| cpu.processor() == Some(index))
     }
 
     pub fn cpus(&self) -> impl Iterator<Item = Cpu> {
