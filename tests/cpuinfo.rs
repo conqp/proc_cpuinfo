@@ -1,4 +1,4 @@
-//! Test CpuInfo trait.
+//! Test `CpuInfo` trait.
 
 use std::str::FromStr;
 
