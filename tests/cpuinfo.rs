@@ -1,5 +1,8 @@
-use proc_cpuinfo::CpuInfo;
+//! Test CpuInfo trait.
+
 use std::str::FromStr;
+
+use proc_cpuinfo::CpuInfo;
 
 const CPU_INFO: &str = "processor	: 0
 vendor_id	: GenuineIntel
