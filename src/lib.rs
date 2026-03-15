@@ -279,7 +279,7 @@ impl<'cpu_info> Cpu<'cpu_info> {
     ///
     /// # Returns
     ///
-    /// Returns a tuple of `(<pysical>, <virtual>)` sizes if available, else `None`.
+    /// Returns a tuple of `(<physical>, <virtual>)` sizes if available, else `None`.
     #[must_use]
     pub fn address_sizes(&self) -> Option<(usize, usize)> {
         self.get("address sizes")
