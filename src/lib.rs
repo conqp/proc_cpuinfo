@@ -3,6 +3,7 @@
 use std::collections::{HashMap, HashSet};
 use std::convert::Infallible;
 use std::fs::read_to_string;
+use std::ops::Deref;
 use std::path::Path;
 use std::str::FromStr;
 
@@ -104,7 +105,7 @@ impl<'cpu_info> Cpu<'cpu_info> {
     /// Return the raw value stored under the given key if available.
     #[must_use]
     pub fn get(&self, key: &str) -> Option<&str> {
-        self.0.get(key).copied()
+        self.0.get(key).map(Deref::deref)
     }
 
     /// Return the processor ID if available.
